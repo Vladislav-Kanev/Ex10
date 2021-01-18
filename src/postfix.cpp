@@ -49,12 +49,11 @@ std::string infix2postfix(std::string infix) {
         }
         if (isOperator(infix[i])) {
             if (infix[i] == '(' || stack.isEmpty()) {
-                stack.push(std::string(1,infix[i]));
-            }
-            else {
-                if (priority(infix[i]) > priority(stack.get()[0]))
+                stack.push(std::string(1, infix[i]));
+            } else {
+                if (priority(infix[i]) > priority(stack.get()[0])) {
                     stack.push(std::string(1, infix[i]));
-                else {
+                } else {
                     while (!stack.isEmpty() &&
                         priority(stack.get()[0]) >= priority(infix[i])) {
                         prefix += stack.pop() + " ";
@@ -63,14 +62,12 @@ std::string infix2postfix(std::string infix) {
                         if (stack.get()[0] == '(') {
                             stack.pop();
                         }
-                    }
-                    else {
+                    } else {
                         stack.push(std::string(1, infix[i]));
                     }
                 }
             }
-        }
-        else {
+        } else {
             std::string buff("");
             while (infix[i] != ' ' && i < infix.size()) {
                 buff += infix[i];
@@ -89,6 +86,9 @@ std::string infix2postfix(std::string infix) {
             continue;
         }
         prefix += stack.pop() + " ";
+    }
+    if (!prefix.empty()) {
+        prefix.erase(prefix.size() - 1, 1);
     }
     return prefix;
 }
